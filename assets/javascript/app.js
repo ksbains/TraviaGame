@@ -31,6 +31,7 @@ function survey (Qs){
 	this.question = 0;
 	this.timer = null;
 	this.time = 0;
+	this.counter = 0;
 	this.saveAnswer = function(ans){
 		this.questions[this.question].setUserAnser(ans);
 	}
@@ -51,26 +52,29 @@ function survey (Qs){
 		this.question = 0;
 		this.timer = null;
 		this.time = 0;
+		this.counter = 0;
 	} 
 }
 
 var Travia = new survey(Qs);
-var counter = 0;
 // FUNCTIONS 
 function displayResult(){
 	$("#question").empty();
-	$("#question").append('<button class = "button" id="rstbtn">Restart<button>')
-		.on("click", function () {
-			Travia.reset(Qs);
-			displayNextQuestion(Travia.questions[Travia.question]);
-		});
+	$("#question").append('<button class = "btn-danger btn-lg" id="rstbtn">Restart</button>');
+	$("#rstbtn").on("click", function () {
+		Travia.reset(Qs);
+		displayNextQuestion(Travia.questions[Travia.question]);
+	});
 
 }
 function displayNextQuestion(){
-	counter++;
-	console.log("inside of displayNextQuestion for the " + counter +" time");
+	Travia.counter++;
+	console.log("inside of displayNextQuestion for the " + Travia.counter +" time");
 	var question = Travia.questions[Travia.question];
-	if(Travia.question === null){
+	if(Travia.counter == 4){
+		console.log(question);
+	}
+	if(Travia.question === null || Travia.counter === Travia.questions.length+1){
 		displayResult()
 	}else{
 		$("#question").empty();
@@ -82,8 +86,8 @@ function displayNextQuestion(){
 			});
 		}
 		
-		$("#question").append('<button class="btn-danger btn-lg" id="subbtn">Submit</button>')
-		.on("click", function () {
+		$("#question").append('<button class="btn-danger btn-lg" id="subbtn">Submit</button>');
+		$("#subbtn").on("click", function () {
 			Travia.setNextQuestion();
 			displayNextQuestion();
 		});
@@ -92,12 +96,10 @@ function displayNextQuestion(){
 
 function displayStart() {
 	//  $('#mydiv').append('<button data-role="button" data-inline="true" data-mini="true" data-theme="b">Another button</button>');
-	$("#question").append(
-		$('<button id="startButton" class="btn-lg btn-primary button"> Start </button>')
-		.on('click',function() {
+	$("#question").append('<button id="startButton" class="btn-lg btn-primary button"> Start </button>');
+	$("#startButton").on('click',function() {
 			displayNextQuestion();
-		})
-	);
+		});
 }
 
 $(document).ready(function() {

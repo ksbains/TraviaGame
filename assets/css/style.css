@@ -25,9 +25,17 @@ body{
 #startButton{
 	margin-bottom: 5%;
 }
-#option{
+#subbtn{
+	margin-bottom: 5%;
+	float: right;
+	margin-right: 2%;
+}
+.option{
 	display: block;
 	margin-bottom: 5%;
 	margin-left: 5%;
 	margin-right: 5%;
+}
+#rstbtn {
+	margin-bottom: 5%;	
 }
