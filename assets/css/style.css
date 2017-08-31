@@ -1,7 +1,15 @@
 #mainScreen {
-	border: 1px solid black;
+	border: 5px solid black;
 	max-width: 700px; 
 	margin-top: 10%;
+
+}
+
+#mainScreen h1{
+	color: black;
+}
+#mainScreen h3{
+	color: red;
 }
 
 .container{
@@ -11,5 +19,15 @@
 }
 
 body{
-	background-image: background-image: url("http://mariapngt.com/wp-content/uploads/2017/06/design-wallpaper-with-inspiration-hd-images.jpg");
+	background-image: url("http://idolza.com/a/f/d/design-hd-wallpaper-wood-background_cool-designs-wallpaper_christmas-decor-photos-bathroom-decoration-ideas-home-trends-2014-ceiling-canopy-for-bed-modern-bedside-lamps-black-furnitur.jpg");
+}
+
+#startButton{
+	margin-bottom: 5%;
+}
+#option{
+	display: block;
+	margin-bottom: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
 }

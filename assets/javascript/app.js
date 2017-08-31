@@ -21,9 +21,9 @@ function Q (text, answers, correct){
 * Qtime
 * timer
 */
-var Q1 = new Q( "what is your name", ["tom", "john", "tobi", "name"], 0);
-var Q2 = new Q( "what is your game", ["bball", "football", "soccer", "baseball"], 0);
-var Q3 = new Q( "what is your lame", ["jquery", "js", "aws", "mongodb"], 2);
+var Q1 = new Q( "This is Question 1?", ["tom", "john", "tobi", "name"], 0);
+var Q2 = new Q( "This is Question 2?", ["bball", "football", "soccer", "baseball"], 0);
+var Q3 = new Q( "This is Question 3?", ["jquery", "js", "aws", "mongodb"], 2);
 var Qs = [Q1,Q2,Q3];
 
 function survey (Qs){
@@ -44,6 +44,7 @@ function survey (Qs){
 			next = this.question + 1;
 		}
 		this.question = next;
+		console.log("the question has been set to " + next);
 	}
 	this.reset = function (){
 		this.questions = Qs;
@@ -54,6 +55,7 @@ function survey (Qs){
 }
 
 var Travia = new survey(Qs);
+var counter = 0;
 // FUNCTIONS 
 function displayResult(){
 	$("#question").empty();
@@ -65,48 +67,25 @@ function displayResult(){
 
 }
 function displayNextQuestion(){
-	// this is where you have to append all of the elements of the question.
-	// you will start with a an h2 for the question 
-	// set the css fo this eleent by definein teh css of any h2 in div main ;)
-	// then you need to appedn th equestions
-	// gotta append subint button too.  
-	// lastly append a button that will have an onclick function. to displayNextQuestion()
-	// 
+	counter++;
+	console.log("inside of displayNextQuestion for the " + counter +" time");
 	var question = Travia.questions[Travia.question];
 	if(Travia.question === null){
 		displayResult()
 	}else{
 		$("#question").empty();
-		console.log(question);
-		console.log("The value of i is: " +i+ " in displayNextQuestion else block");
 		$("#question").append('<h2 class="Qh2">' + question.text + '</h2>');
-		console.log(question);
-		console.log("The value of i is: "+i+ " after appending the H2 ");
 		for(var i = 0; i<question.answers.length; i++){
-			console.log(question);
-			console.log("The value of i is: "+i+ " in the for loop");
-			$("#question").append("<button class='button option'>" + question.answers[i]+ "</button>")
+			$("#question").append("<button class='button option btn-success btn-md'>" + question.answers[i]+ "</button>")
 			.on("click", function() {
 				Travia.saveAnswer(i);
 			});
 		}
-		$("#question").append('<button class = "button" id="subbtn">Submit<button>')
+		
+		$("#question").append('<button class="btn-danger btn-lg" id="subbtn">Submit</button>')
 		.on("click", function () {
 			Travia.setNextQuestion();
 			displayNextQuestion();
-		});
-	}
-}
-function appendQuestions(question){
-	// cycle thru the question and add each optin div
-	console.log("appendQuestions");
-	console.log(question); 
-	for(var i = 0; i<question.answers.length; i++){
-		console.log(question);
-		console.log(i);
-		$("#question").append("<button class='button option'>" + question.answers[i]+ "</button>")
-		.on("click", function() {
-			Travia.saveAnswer(i);
 		});
 	}
 }
@@ -114,7 +93,7 @@ function appendQuestions(question){
 function displayStart() {
 	//  $('#mydiv').append('<button data-role="button" data-inline="true" data-mini="true" data-theme="b">Another button</button>');
 	$("#question").append(
-		$('<button id="startButton" class="button"> Start </button>')
+		$('<button id="startButton" class="btn-lg btn-primary button"> Start </button>')
 		.on('click',function() {
 			displayNextQuestion();
 		})
