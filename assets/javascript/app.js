@@ -64,7 +64,7 @@ function displayResult(){
 		});
 
 }
-function displayNextQuestion(question){
+function displayNextQuestion(){
 	// this is where you have to append all of the elements of the question.
 	// you will start with a an h2 for the question 
 	// set the css fo this eleent by definein teh css of any h2 in div main ;)
@@ -72,7 +72,8 @@ function displayNextQuestion(question){
 	// gotta append subint button too.  
 	// lastly append a button that will have an onclick function. to displayNextQuestion()
 	// 
-	if(question.question === null){
+	var question = Travia.questions[Travia.question];
+	if(Travia.question === null){
 		displayResult()
 	}else{
 		$("#question").empty();
@@ -91,7 +92,8 @@ function displayNextQuestion(question){
 		}
 		$("#question").append('<button class = "button" id="subbtn">Submit<button>')
 		.on("click", function () {
-			displayNextQuestion(question++);
+			Travia.setNextQuestion();
+			displayNextQuestion();
 		});
 	}
 }
@@ -114,7 +116,7 @@ function displayStart() {
 	$("#question").append(
 		$('<button id="startButton" class="button"> Start </button>')
 		.on('click',function() {
-			displayNextQuestion(Travia.questions[Travia.question]);
+			displayNextQuestion();
 		})
 	);
 }
