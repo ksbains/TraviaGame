@@ -86,7 +86,8 @@ function timeIt(){
 	Travia.time++;
 	if(Travia.time === 30){
 		Travia.setNextQuestion();
-		displayNextQuestion();
+		displayTimeUp();
+		setTimeout(displayNextQuestion, 5000);
 	}
 }
 function displayResult(){
@@ -146,6 +147,14 @@ function displayCorrect(){
 	$("#question").empty();
 	$("#question").append('<h2>Diem your Basketball IQ is off the charts! You Right!!!</h2>');
 	$("#question").append('<img src="https://i.imgur.com/7HXx57W.gif">');
+}
+function displayTimeUp() {
+	$("#question").empty();
+	Travia.clearTimer();
+	$("#timeRem").text('Time Remaining: '+ Travia.time );
+	$("#question").append('<h2>You are out of time!!!</h2>');
+	$("#question").append('<img src="https://media.tenor.com/images/830224f516ccbd11ec0d900a8b195a32/tenor.gif">');
+
 }
 
 function displayStart() {
