@@ -13,7 +13,7 @@ function Q (text, answers, correct){
 	// set response functoin
 	this.setUserAnser = function(ans){
 		console.log("inside the setUserAnser, the userReponse is: " + ans);
-		this.userReponse = ans;
+		this.userReponse = parseInt(ans);
 	 };
 }
 /*Survey object
@@ -33,6 +33,7 @@ function survey (Qs){
 	this.timer = null;
 	this.time = 0;
 	this.counter = 0;
+	this.incounter = 0;
 	this.saveAnswer = function(ans){
 		console.log("inside the saveAnser, the question is: " +this.question);
 		console.log("inside the saveAnser, the userReponse is: " + ans);
@@ -42,7 +43,8 @@ function survey (Qs){
 		var next = null;
 		if(this.question === null){// first
 			next = 0;
-		}else if(this.question === this.question.length -1){//last
+		}else if(this.question === this.questions.length -1){//last
+			console.log("this is the last one")
 			next = null;
 		}else{
 			next = this.question + 1;
@@ -56,6 +58,7 @@ function survey (Qs){
 		this.timer = null;
 		this.time = 0;
 		this.counter = 0;
+		this.incounter = 0;
 	} 
 	this.clearTimer = function (){
 		this.time = 0;
@@ -87,6 +90,11 @@ function displayResult(){
 	$("#question").empty();
 	Travia.clearTimer();
 	$("#timeRem").text('Time Remaining: '+ Travia.time );
+	$("#question").append('<h2> All done, heres how you did!</h2>');
+	$("#question").append('<h3> Correct Answers: ' + Travia.counter + '</h3>');
+	$("#question").append('<h3> Incorrect Answers: ' + Travia.incounter + '</h3>');
+	var unanswered = Travia.questions.length - (Travia.counter + Travia.incounter);
+	$("#question").append('<h3> Unanswerd: ' + unanswered + '</h3>');
 	$("#question").append('<button class = "btn-danger btn-lg" id="rstbtn">Restart</button>');
 	$("#rstbtn").on("click", function () {
 		Travia.reset(Qs);
@@ -95,25 +103,28 @@ function displayResult(){
 
 }
 function displayNextQuestion(){
-	console.log("inside of displayNextQuestion " + Travia.counter);
-	Travia.counter++;
+	// console.log("inside of displayNextQuestion " + Travia.counter);
+	// Travia.counter++;
 	var question = Travia.questions[Travia.question];
 	Travia.clearTimer();
 	if(Travia.question === null || Travia.counter === Travia.questions.length+1){
 		displayResult()
 	}else{
 		$("#question").empty();
-		$("#question").append('<h3 id= "timeRem">Time Remaining:</h3>');
 		$("#question").append('<h2 class="Qh2">' + question.text + '</h2>');
 		for(var i = 0; i<question.answers.length; i++){
-			$("#question").append('<button class="button option btn-success btn-md" id="option' +i+'">' + question.answers[i]+ '</button>');			
-			$("#option"+i).on("click", function() {
-				Travia.saveAnswer(i);
+			$("#question").append('<button class="button option btn-success btn-md" id="' +i+'">' + question.answers[i]+ '</button>');			
+			$("#"+i).on("click", function() {
+				Travia.saveAnswer( $(this).attr('id'));
 				if(Travia.questions[Travia.question].userReponse === Travia.questions[Travia.question].correct){
 					displayCorrect();
+					Travia.counter++;
+					Travia.setNextQuestion();
 					setTimeout(displayNextQuestion, 5000);
 				}else{
+					Travia.incounter++;
 					displayInCorrect();
+					Travia.setNextQuestion();
 					setTimeout(displayNextQuestion, 5000);
 				}
 				
@@ -142,6 +153,7 @@ function displayStart() {
 	//  $('#mydiv').append('<button data-role="button" data-inline="true" data-mini="true" data-theme="b">Another button</button>');
 	$("#question").append('<button id="startButton" class="btn-lg btn-primary button"> Start </button>');
 	$("#startButton").on('click',function() {
+		$("#ttt").append('<h3 id= "timeRem">Time Remaining:</h3>');
 			displayNextQuestion()
 		});
 }
