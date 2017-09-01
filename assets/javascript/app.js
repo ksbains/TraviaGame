@@ -22,10 +22,13 @@ function Q (text, answers, correct){
 * Qtime
 * timer
 */
-var Q1 = new Q( "This is Question 1?", ["tom", "john", "tobi", "name"], 0);
-var Q2 = new Q( "This is Question 2?", ["bball", "football", "soccer", "baseball"], 0);
-var Q3 = new Q( "This is Question 3?", ["jquery", "js", "aws", "mongodb"], 0);
-var Qs = [Q1,Q2,Q3];
+var Q1 = new Q( "Which High School Basketball is said to be the future face of the NBA?", ["Zion Williamson", "LaMelo Ball", "Julian Newman", "Shareef O'Neal"], 0);
+var Q2 = new Q( "Which player has the highest 3-Point Percentage", ["Stephen Curry", "LeBron James", "Stever Kerr", "Michael Jordan"], 2);
+var Q3 = new Q( "Which NBA Franchise has won the most championships?", ["Boston Celtics", "Golden State Warriors", "Los Angeles Lakers", "Chicago Bulls"], 0);
+var Q4 = new Q( "Who is the richest NBA player ever?" , ["Magic Johnson", "Lebron James", "Michael Jordan", "Shaquille O Neal"], 2);
+var Q5 = new Q( "Who has won the most titles in the history of the NBA?" , ["Lebron James","Bill Russell", "Michael Jordan", "Kareem Abdul-Jabbar"], 1);
+
+var Qs = [Q1,Q2,Q3,Q4,Q5];
 
 function survey (Qs){
 	this.questions = Qs;
@@ -78,10 +81,10 @@ var Travia = new survey(Qs);
 
 function timeIt(){
 	// console.log("Inside of the timeIT, the time is: " + Travia.time);
-	var currTime = 30 - Travia.time;
+	var currTime = 29 - Travia.time;
 	$("#timeRem").text('Time Remaining: '+ currTime );
 	Travia.time++;
-	if(Travia.time === 31){
+	if(Travia.time === 30){
 		Travia.setNextQuestion();
 		displayNextQuestion();
 	}
@@ -107,6 +110,7 @@ function displayNextQuestion(){
 	// Travia.counter++;
 	var question = Travia.questions[Travia.question];
 	Travia.clearTimer();
+	Travia.startTimer();
 	if(Travia.question === null || Travia.counter === Travia.questions.length+1){
 		displayResult()
 	}else{
@@ -126,27 +130,22 @@ function displayNextQuestion(){
 					displayInCorrect();
 					Travia.setNextQuestion();
 					setTimeout(displayNextQuestion, 5000);
-				}
-				
+				}		
 			});
 		}
-		
-		$("#question").append('<button class="btn-danger btn-lg" id="subbtn">Submit</button>');
-		$("#subbtn").on("click", function () {
-			Travia.setNextQuestion();
-			displayNextQuestion();
-		});
-		Travia.startTimer();
+		// Travia.startTimer();
 	}
 }
 function displayInCorrect(){
 	$("#question").empty();
-	$("#question").append('<img src="http://33.media.tumblr.com/d6cd25ee9bf14daac484fe8f93b0ff5b/tumblr_n2iccqiNP61ra11u8o5_500.gif">');
+	$("#question").append('<h2>Boy you better get that outta here! You Wrong!!!</h2>');
+	$("#question").append('<img src="https://uproxx.files.wordpress.com/2016/06/lebronblock2.gif?w=650">');
 }
 
 function displayCorrect(){
 	$("#question").empty();
-	$("#question").append('<img src="https://68.media.tumblr.com/d69fd8fb038e87f32667e48bc72a7c4e/tumblr_o2snegz3Vr1uqe8iio1_500.gif">');
+	$("#question").append('<h2>Diem your Basketball IQ is off the charts! You Right!!!</h2>');
+	$("#question").append('<img src="https://i.imgur.com/7HXx57W.gif">');
 }
 
 function displayStart() {
